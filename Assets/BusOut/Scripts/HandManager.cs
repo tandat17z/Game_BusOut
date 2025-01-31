@@ -15,6 +15,8 @@ public class HandManager : MonoBehaviour
 
     public List<GameObject> cardsInHand = new();
 
+    public int maxHandSize = 12;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +25,16 @@ public class HandManager : MonoBehaviour
 
     public void AddCardToHand(Card cardData)
     {
-        GameObject newCard = Instantiate(cardPrefab, handTransform.position, Quaternion.identity, handTransform);
-        cardsInHand.Add(newCard);
+        if( cardsInHand.Count < maxHandSize)
+        {
+            GameObject newCard = Instantiate(cardPrefab, handTransform.position, Quaternion.identity, handTransform);
+            cardsInHand.Add(newCard);
 
-        var cardDisplay = newCard.GetComponent<CardDisplay>();
-        cardDisplay.cardData = cardData;
-        cardDisplay.UpdateCardDisplay();
+            var cardDisplay = newCard.GetComponent<CardDisplay>();
+            cardDisplay.cardData = cardData;
+            cardDisplay.UpdateCardDisplay();
+
+        }
 
         UpdateHandVisuals();
     }
@@ -59,9 +65,9 @@ public class HandManager : MonoBehaviour
 
     private void Update()
     {
-        if (cardsInHand.Count > 0)
-        {
-            UpdateHandVisuals();
-        }
+        //if (cardsInHand.Count > 0)
+        //{
+        //    UpdateHandVisuals();
+        //}
     }
 }
